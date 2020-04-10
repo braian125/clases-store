@@ -17,3 +17,14 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Stefa
+Route::group(['prefix' => 'v1'], function (){
+    Route::group(['prefix' => 'invoices'], function (){
+        Route::get('', 'InvoiceController@index');
+        Route::get('{id}', 'InvoiceController@show');
+        Route::post('', 'InvoiceController@store');
+        Route::put('{id}', 'InvoiceController@update');
+        Route::delete('{id}', 'InvoiceController@destroy');
+    });
+});
