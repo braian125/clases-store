@@ -17,7 +17,7 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('description')->nullable();
-            $table->string('url')->nullable();
+            $table->string('url')->default("https://dummyimage.com/640x360/fff/aaa");
             $table->float('price');
             $table->softDeletes();
             $table->timestamps();

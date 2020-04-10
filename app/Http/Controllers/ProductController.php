@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Product;
 
 use Illuminate\Http\Request;
 
@@ -13,7 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        return Product::all();
     }
 
     /**
@@ -24,7 +25,8 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $product = Product::create($request->all());
+        return $product;
     }
 
     /**
@@ -35,7 +37,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        return Product::find($id);
     }
 
     /**
@@ -47,7 +49,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return Product::where('id', $id)->update($request->all());
     }
 
     /**
@@ -57,7 +59,15 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        //
+    { 
+        $product = Product::withTrashed()->findOrFail($id);
+        
+        if ($product->trashed()) {
+            $product->restore();
+        } else {
+            $product->delete();
+        }
+        
+        return response()->json($product);
     }
 }
