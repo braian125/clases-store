@@ -12,4 +12,9 @@ class Product extends Model
     protected $fillable = [
         'name', 'description', 'url', 'price',
     ];
+
+    public function invoices()
+    {
+        return $this->belongsToMany('App\Models\Invoice', 'invoice_products', 'product_id', 'invoice_id');
+    }
 }
