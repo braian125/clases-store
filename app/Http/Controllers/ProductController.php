@@ -59,7 +59,15 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        //
+    { 
+        $product = Product::withTrashed()->findOrFail($id);
+        
+        if ($product->trashed()) {
+            $product->restore();
+        } else {
+            $product->delete();
+        }
+        
+        return response()->json($product);
     }
 }
